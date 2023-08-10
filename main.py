@@ -23,6 +23,7 @@ class App():
         self.__create_button('0', self.__button_0, 0.35, 0.7)
 
         #operation buttons
+        self.__create_button('C', self.__button_clear, 0.65, 0.3)
         self.__create_button('<=', self.__button_backspace, 0.8, 0.3)
         self.__create_button('+', self.__button_plus, 0.8, 0.4)
         self.__create_button('-', self.__button_minus, 0.8, 0.5)
@@ -88,6 +89,9 @@ class App():
         self.__write_output('')
     def __button_backspace(self):
         self._output_string = self._output_string[:-1]
+        self.__write_output('')
+    def __button_clear(self):
+        self._output_string = ''
         self.__write_output('')
 
     def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
