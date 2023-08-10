@@ -23,16 +23,11 @@ class App():
         self.__create_button('0', self.__button_0, 0.35, 0.7)
 
         #operation buttons
-        but_plus = ctk.CTkButton(master=self._app,text='+', height=40, width=40, command=self.__button_plus)
-        but_plus.place(relx=0.8, rely=0.4, anchor=tk.CENTER)
-        but_minus = ctk.CTkButton(master=self._app,text='-', height=40, width=40, command=self.__button_minus)
-        but_minus.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
-        but_multiply = ctk.CTkButton(master=self._app,text='*', height=40, width=40, command=self.__button_multiply)
-        but_multiply.place(relx=0.8, rely=0.6, anchor=tk.CENTER)
-        but_divide = ctk.CTkButton(master=self._app,text='/', height=40, width=40, command=self.__button_divide)
-        but_divide.place(relx=0.8, rely=0.7, anchor=tk.CENTER)
-        but_result = ctk.CTkButton(master=self._app,text='=', height=40, width=40, command=self.__button_result)
-        but_result.place(relx=0.8, rely=0.85, anchor=tk.CENTER)
+        self.__create_button('+', self.__button_plus, 0.8, 0.4)
+        self.__create_button('-', self.__button_minus, 0.8, 0.5)
+        self.__create_button('*', self.__button_multiply, 0.8, 0.6)
+        self.__create_button('/', self.__button_divide, 0.8, 0.7)
+        self.__create_button('=', self.__button_result, 0.8, 0.85)
 
         #string output information
         self.output_panel = ctk.CTkTextbox(master=self._app, width=200, height=10) #state=tk.DISABLED чтобы заблокировать поле ввода пользователю
