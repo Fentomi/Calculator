@@ -30,7 +30,7 @@ class App():
         self.__create_button('=', self.__button_result, 0.8, 0.85)
 
         #string output information
-        self.output_panel = ctk.CTkTextbox(master=self._app, width=200, height=10) #state=tk.DISABLED чтобы заблокировать поле ввода пользователю
+        self.output_panel = ctk.CTkTextbox(master=self._app, width=200, height=10, state=tk.DISABLED) #state=tk.DISABLED чтобы заблокировать поле ввода пользователю
         self.output_panel.place(relx = 0.5, rely = 0.1, anchor = tk.CENTER)
         self._output_string = ''
 
@@ -42,61 +42,33 @@ class App():
 
     #function button-click reaction
     def __button_1(self):
-        self._output_string += '1'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('1')
     def __button_2(self):
-        self._output_string += '2'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('2')
     def __button_3(self):
-        self._output_string += '3'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('3')
     def __button_4(self):
-        self._output_string += '4'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('4')
     def __button_5(self):
-        self._output_string += '5'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('5')
     def __button_6(self):
-        self._output_string += '6'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('6')
     def __button_7(self):
-        self._output_string += '7'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('7')
     def __button_8(self):
-        self._output_string += '8'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('8')
     def __button_9(self):
-        self._output_string += '9'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('9')
     def __button_0(self):
-        self._output_string += '0'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('0')
     def __button_plus(self):
-        self._output_string += '+'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('+')
     def __button_minus(self):
-        self._output_string += '-'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('-')
     def __button_multiply(self):
-        self._output_string += '*'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('*')
     def __button_divide(self):
-        self._output_string += '/'
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('/')
     def __button_result(self):
         if '+' in self._output_string:
             nums = self._output_string.split('+')
@@ -112,14 +84,20 @@ class App():
             self._output_string = str(int(nums[0]) / int(nums[1]))
         else:
             self._output_string = '0'
-            
-        self.output_panel.delete('0.0', tk.END)
-        self.output_panel.insert('0.0', self._output_string)
+        self.__write_output('')
     
     def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
         but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, command=anchor_func)
         but.place(relx=posX,rely=posY,anchor=tk.CENTER)
         return but
+    
+    def __write_output(self, text: str):
+        self.output_panel.configure(state=tk.NORMAL)
+        self._output_string += text
+        self.output_panel.delete('0.0', tk.END)
+        self.output_panel.insert('0.0', self._output_string)
+        self.output_panel.configure(state=tk.DISABLED)
+
 def main():
     app = App()
 
