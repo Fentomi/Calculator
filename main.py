@@ -11,25 +11,16 @@ class App():
         self._app.title('Калькуляктер!')
 
         #num buttons
-        but1 = self.__create_button('1', self.__button_1, 0.2, 0.4)
-        but2 = ctk.CTkButton(master= self._app, text='2', height=40, width=40, command=self.__button_2)
-        but2.place(relx=0.35,rely=0.4,anchor=tk.CENTER)
-        but3 = ctk.CTkButton(master= self._app, text='3', height=40, width=40, command=self.__button_3)
-        but3.place(relx=0.5,rely=0.4,anchor=tk.CENTER)
-        but4 = ctk.CTkButton(master= self._app, text='4', height=40, width=40, command=self.__button_4)
-        but4.place(relx=0.2,rely=0.5,anchor=tk.CENTER)
-        but5 = ctk.CTkButton(master= self._app, text='5', height=40, width=40, command=self.__button_5)
-        but5.place(relx=0.35,rely=0.5,anchor=tk.CENTER)
-        but6 = ctk.CTkButton(master= self._app, text='6', height=40, width=40, command=self.__button_6)
-        but6.place(relx=0.5,rely=0.5,anchor=tk.CENTER)
-        but7 = ctk.CTkButton(master= self._app, text='7', height=40, width=40, command=self.__button_7)
-        but7.place(relx=0.2,rely=0.6,anchor=tk.CENTER)
-        but8 = ctk.CTkButton(master= self._app, text='8', height=40, width=40, command=self.__button_8)
-        but8.place(relx=0.35,rely=0.6,anchor=tk.CENTER)
-        but9 = ctk.CTkButton(master= self._app, text='9', height=40, width=40, command=self.__button_9)
-        but9.place(relx=0.5,rely=0.6,anchor=tk.CENTER)
-        but0 = ctk.CTkButton(master= self._app, text='0', height=40, width=40, command=self.__button_0)
-        but0.place(relx=0.35,rely=0.7,anchor=tk.CENTER)
+        self.__create_button('1', self.__button_1, 0.2, 0.4)
+        self.__create_button('2', self.__button_2, 0.35, 0.4)
+        self.__create_button('3', self.__button_3, 0.5, 0.4)
+        self.__create_button('4', self.__button_4, 0.2, 0.5)
+        self.__create_button('5', self.__button_5, 0.35, 0.5)
+        self.__create_button('6', self.__button_6, 0.5, 0.5)
+        self.__create_button('7', self.__button_7, 0.2, 0.6)
+        self.__create_button('8', self.__button_8, 0.35, 0.6)
+        self.__create_button('9', self.__button_9, 0.5, 0.6)
+        self.__create_button('0', self.__button_0, 0.35, 0.7)
 
         #operation buttons
         but_plus = ctk.CTkButton(master=self._app,text='+', height=40, width=40, command=self.__button_plus)
@@ -129,7 +120,11 @@ class App():
             
         self.output_panel.delete('0.0', tk.END)
         self.output_panel.insert('0.0', self._output_string)
-
+    
+    def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
+        but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, command=anchor_func)
+        but.place(relx=posX,rely=posY,anchor=tk.CENTER)
+        return but
 def main():
     app = App()
 
