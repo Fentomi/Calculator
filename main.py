@@ -4,7 +4,8 @@ import customtkinter as ctk
 class App(): 
     def __init__(self):
         #general settings application
-        ctk.set_appearance_mode('System')
+        ctk.set_appearance_mode('dark')
+        ctk.set_default_color_theme('dark-blue')
         self._app = ctk.CTk()
         self._app.geometry('350x450')
         self._app.resizable(False, False)
@@ -30,15 +31,10 @@ class App():
         self.__create_button('*', self.__button_multiply, 0.8, 0.6)
         self.__create_button('/', self.__button_divide, 0.8, 0.7)
         self.__create_button('=', self.__button_result, 0.8, 0.85)
-
+        self.__create_button(',', self.__button_point, 0.5, 0.7)
         #string output information
-        self.output_panel = ctk.CTkTextbox(master=self._app, width=200, height=10, state=tk.DISABLED) #state=tk.DISABLED чтобы заблокировать поле ввода пользователю
-        self.output_panel.place(relx = 0.5, rely = 0.1, anchor = tk.CENTER)
+        self.__create_textbox()
         self._output_string = ''
-
-        #bottom label
-        info_label = ctk.CTkLabel(self._app, text='Сделал Никита старший.', text_color='Blue')
-        info_label.place(relx=0.4, rely=0.85, anchor=tk.CENTER)
 
         self._app.mainloop()
 
@@ -93,12 +89,23 @@ class App():
     def __button_clear(self):
         self._output_string = ''
         self.__write_output('')
+    def __button_point(self):
+        try:
+            int(self._output_string[-1])
+            self.__write_output(',')
+        except:
+            pass
 
     def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
-        but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, command=anchor_func)
+        but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, 
+        command=anchor_func, font=('Arial Bold', 24))
         but.place(relx=posX,rely=posY,anchor=tk.CENTER)
         return but
-    
+    def __create_textbox(self):
+        self.output_panel = ctk.CTkTextbox(master=self._app, width=250, height=30, state=tk.DISABLED, 
+        activate_scrollbars=False, font=('Arial', 24))
+        self.output_panel.place(relx = 0.5, rely = 0.1, anchor = tk.CENTER)
+
     def __write_output(self, text: str):
         self.output_panel.configure(state=tk.NORMAL)
         self._output_string += text
