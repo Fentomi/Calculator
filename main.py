@@ -67,6 +67,20 @@ class App():
         self.__write_output('*')
     def __button_divide(self):
         self.__write_output('/')
+    def __button_backspace(self):
+        self._output_string = self._output_string[:-1]
+        self.__write_output('')
+    def __button_clear(self):
+        self._output_string = ''
+        self.__write_output('')
+    def __button_point(self):
+        try:
+            int(self._output_string[-1])
+            self.__write_output(',')
+        except:
+            pass
+    
+    #main function
     def __button_result(self):
         if '+' in self._output_string:
             nums = self._output_string.split('+')
@@ -83,19 +97,8 @@ class App():
         else:
             self._output_string = '0'
         self.__write_output('')
-    def __button_backspace(self):
-        self._output_string = self._output_string[:-1]
-        self.__write_output('')
-    def __button_clear(self):
-        self._output_string = ''
-        self.__write_output('')
-    def __button_point(self):
-        try:
-            int(self._output_string[-1])
-            self.__write_output(',')
-        except:
-            pass
 
+    #create stuffs
     def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
         but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, 
         command=anchor_func, font=('Arial Bold', 24))
@@ -106,6 +109,7 @@ class App():
         activate_scrollbars=False, font=('Arial', 24))
         self.output_panel.place(relx = 0.5, rely = 0.1, anchor = tk.CENTER)
 
+    #write something
     def __write_output(self, text: str):
         self.output_panel.configure(state=tk.NORMAL)
         self._output_string += text
