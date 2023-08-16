@@ -36,6 +36,9 @@ class App():
         self.__create_textbox()
         self._output_string = ''
 
+        #if people enter number
+        self._app.bind('<Key>', self.__inputChar)
+
         self._app.mainloop()
 
     #function button-click reaction
@@ -79,7 +82,47 @@ class App():
             self.__write_output(',')
         except:
             pass
-    
+
+    #Функция срабатывает, когда пользователь нажимает что-то на клавиатуре
+    def __inputChar(self, event):
+        if event.keysym == '0':
+            self.__button_0()
+        elif event.keysym == '1':
+            self.__button_1()
+        elif event.keysym == '2':
+            self.__button_2()
+        elif event.keysym == '3':
+            self.__button_3()
+        elif event.keysym == '4':
+            self.__button_4()
+        elif event.keysym == '5':
+            self.__button_5()
+        elif event.keysym == '6':
+            self.__button_6()
+        elif event.keysym == '7':
+            self.__button_7()
+        elif event.keysym == '8':
+            self.__button_8()
+        elif event.keysym == '9':
+            self.__button_9()
+        elif event.keysym == 'plus':
+            self.__button_plus()
+        elif event.keysym == 'minus':
+            self.__button_minus()
+        elif event.keysym == 'asterisk':
+            self.__button_multiply()
+        elif event.keysym == 'slash':
+            self.__button_divide()
+        elif event.keysym == 'comma':
+            self.__button_point()
+        elif event.keysym == 'BackSpace':
+            self.__button_backspace()
+        elif event.keysym == 'c':
+            self.__button_clear()
+        elif event.keysym == 'Return':
+            self.__button_result()
+        elif event.keysym == 'Escape':
+            self._app.destroy()
     #main function
     def __button_result(self):
         if '+' in self._output_string:
