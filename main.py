@@ -64,13 +64,29 @@ class Calc():
     def __button_0(self):
         self.__write_output('0')
     def __button_plus(self):
-        self.__write_output('+')
+        try:
+            int(self._output_string[-1])
+            self.__write_output('+')
+        except:
+            pass
     def __button_minus(self):
-        self.__write_output('-')
+        try:
+            int(self._output_string[-1])
+            self.__write_output('-')
+        except:
+            pass
     def __button_multiply(self):
-        self.__write_output('*')
+        try:
+            int(self._output_string[-1])
+            self.__write_output('*')
+        except:
+            pass
     def __button_divide(self):
-        self.__write_output('/')
+        try:
+            int(self._output_string[-1])
+            self.__write_output('/')
+        except:
+            pass
     def __button_backspace(self):
         self._output_string = self._output_string[:-1]
         self.__write_output('')
@@ -118,7 +134,7 @@ class Calc():
             self.__button_point()
         elif event.keysym == 'BackSpace':
             self.__button_backspace()
-        elif event.keysym == 'c':
+        elif event.keysym == 'c' or event.keysym == 'с':
             self.__button_clear()
         elif event.keysym == 'Return':
             self.__button_result()
