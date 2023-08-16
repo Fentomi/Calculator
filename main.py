@@ -9,7 +9,7 @@ class App():
         self._app = ctk.CTk()
         self._app.geometry('350x450')
         self._app.resizable(False, False)
-        self._app.title('Калькуляктер!')
+        self._app.title('Калькулятор')
 
         #num buttons
         self.__create_button('1', self.__button_1, 0.2, 0.4)
@@ -99,10 +99,10 @@ class App():
         self.__write_output('')
 
     #create stuffs
-    def __create_button(self, text: str, anchor_func, posX: [float, int], posY: [float, int]) -> ctk.CTkButton:
-        but = ctk.CTkButton(master= self._app, text= text, height=40, width=40, 
+    def __create_button(self, text: str, anchor_func, posX:[float, int], posY:[float, int]) -> ctk.CTkButton:
+        but = ctk.CTkButton(master=self._app, text=text, height=40, width=40,
         command=anchor_func, font=('Arial Bold', 24))
-        but.place(relx=posX,rely=posY,anchor=tk.CENTER)
+        but.place(relx=posX, rely=posY, anchor=tk.CENTER)
         return but
     def __create_textbox(self):
         self.output_panel = ctk.CTkTextbox(master=self._app, width=250, height=30, state=tk.DISABLED, 
