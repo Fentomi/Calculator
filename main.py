@@ -1,7 +1,8 @@
 import tkinter as tk
 import customtkinter as ctk
+import re
 
-class App(): 
+class Calc():
     def __init__(self):
         #general settings application
         ctk.set_appearance_mode('dark')
@@ -79,7 +80,7 @@ class App():
     def __button_point(self):
         try:
             int(self._output_string[-1])
-            self.__write_output(',')
+            self.__write_output('.')
         except:
             pass
 
@@ -123,22 +124,10 @@ class App():
             self.__button_result()
         elif event.keysym == 'Escape':
             self._app.destroy()
+
     #main function
     def __button_result(self):
-        if '+' in self._output_string:
-            nums = self._output_string.split('+')
-            self._output_string = str(int(nums[0]) + int(nums[1]))
-        elif '-' in self._output_string:
-            nums = self._output_string.split('-')
-            self._output_string = str(int(nums[0]) - int(nums[1]))
-        elif '*' in self._output_string:
-            nums = self._output_string.split('*')
-            self._output_string = str(int(nums[0]) * int(nums[1]))
-        elif '/' in self._output_string:
-            nums = self._output_string.split('/')
-            self._output_string = str(int(nums[0]) / int(nums[1]))
-        else:
-            self._output_string = '0'
+        self._output_string = self.calculation(self._output_string)
         self.__write_output('')
 
     #create stuffs
@@ -160,8 +149,77 @@ class App():
         self.output_panel.insert('0.0', self._output_string)
         self.output_panel.configure(state=tk.DISABLED)
 
+    #class-methods
+    @classmethod
+    def operations_in_string(self, string: str) -> list:
+        oper = list()
+        for item in string:
+            if item in ['-', '+', '*', '/']:
+                oper.append(item)
+        return oper
+    @classmethod
+    def numbers_in_string(self, string: str) -> list:
+        nums = list()
+        str_num = ''
+        for item in string:
+            if item in ['-', '+', '*', '/']:
+                nums.append(float(str_num))
+                str_num = ''
+            else:
+                str_num += item
+        nums.append(float(str_num))
+        return nums
+    @classmethod
+    def __calc_para(self, char: str, temp=0, numbers=[], result=None):
+        if result is None:
+            if char == '+':
+                result = numbers[temp] + numbers[temp + 1]
+                temp += 2
+            elif char == '-':
+                result = numbers[temp] - numbers[temp + 1]
+                temp += 2
+            elif char == '*':
+                result = numbers[temp] * numbers[temp + 1]
+                temp += 2
+            elif char == '/':
+                result = numbers[temp] / numbers[temp + 1]
+                temp += 2
+            return result, temp
+        else:
+            if char == '+':
+                result += numbers[temp]
+                temp += 1
+            elif char == '-':
+                result -= numbers[temp]
+                temp += 1
+            elif char == '*':
+                result *= numbers[temp]
+                temp += 1
+            elif char == '/':
+                result /= numbers[temp]
+                temp += 1
+            return result, temp
+    def calculation(self, string):
+        chars = self.operations_in_string(string)
+        numbers = self.numbers_in_string(string)
+
+        result = None
+        temp = 0
+        for i in chars:
+            result, temp = self.__calc_para(char=i, temp=temp, numbers=numbers, result=result)
+
+        result = result.__round__(2)
+        result = self.__remove_zeros_in_result_string(str(result))
+        return result
+    def __remove_zeros_in_result_string(self, string: str) -> str:
+        splitted_string = string.split('.')
+        for item in splitted_string[1]:
+            if item != '0':
+                return string
+        return splitted_string[0]
+
 def main():
-    app = App()
+    app = Calc()
 
 if __name__ == '__main__':
     main()
