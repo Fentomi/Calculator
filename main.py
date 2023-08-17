@@ -85,11 +85,9 @@ class Calc():
         except:
             pass
     def __button_minus(self):
-        try:
-            int(self._output_string[-1])
+        if self._output_string[-1] != '-' or self._output_string == '':
+            self.__replace_first_zero_on_button()
             self.__write_output('-')
-        except:
-            pass
     def __button_multiply(self):
         try:
             int(self._output_string[-1])
@@ -188,7 +186,11 @@ class Calc():
     @classmethod
     def operations_in_string(self, string: str) -> list:
         oper = list()
+        first_char_is_minus = False
         for item in string:
+            if string[0] == '-' and first_char_is_minus is False:
+                first_char_is_minus = True
+                continue
             if item in ['-', '+', '*', '/']:
                 oper.append(item)
         return oper
@@ -196,8 +198,13 @@ class Calc():
     def numbers_in_string(self, string: str) -> list:
         nums = list()
         str_num = ''
+        first_char_is_minus = False
         for item in string:
-            if item in ['-', '+', '*', '/']:
+            if string[0] == '-' and first_char_is_minus is False:
+                str_num += '-'
+                first_char_is_minus = True
+                continue
+            elif item in ['-', '+', '*', '/']:
                 nums.append(float(str_num))
                 str_num = ''
             else:
