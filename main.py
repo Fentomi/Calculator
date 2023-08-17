@@ -103,7 +103,7 @@ class Calc():
     def __button_backspace(self):
         if self.cache_last_action is None and len(self._output_string) == 1:
             self._output_string = '0'
-        elif self.cache_last_action is None:
+        elif self.cache_last_action is None or self._output_string != self.result:
             self._output_string = self._output_string[:-1]
         self.__write_output('')
     def __button_clear(self):
