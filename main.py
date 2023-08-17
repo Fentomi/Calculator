@@ -4,6 +4,10 @@ import re
 
 class Calc():
     def __init__(self):
+        #глобальные переменные
+        self.result = None
+        self.cache_last_action = None
+
         #general settings application
         ctk.set_appearance_mode('dark')
         ctk.set_default_color_theme('dark-blue')
@@ -88,9 +92,11 @@ class Calc():
         except:
             pass
     def __button_backspace(self):
+        self.cache_last_action = None
         self._output_string = self._output_string[:-1]
         self.__write_output('')
     def __button_clear(self):
+        self.cache_last_action = None
         self._output_string = ''
         self.__write_output('')
     def __button_point(self):
@@ -216,17 +222,27 @@ class Calc():
                 temp += 1
             return result, temp
     def calculation(self, string):
-        chars = self.operations_in_string(string)
-        numbers = self.numbers_in_string(string)
+        if self.cache_last_action is None:
+            chars = self.operations_in_string(string)
+            numbers = self.numbers_in_string(string)
 
-        result = None
-        temp = 0
-        for i in chars:
-            result, temp = self.__calc_para(char=i, temp=temp, numbers=numbers, result=result)
+            self.result = None
+            temp = 0
+            for i in chars:
+                self.result, temp = self.__calc_para(char=i, temp=temp, numbers=numbers, result=self.result)
 
-        result = result.__round__(2)
-        result = self.__remove_zeros_in_result_string(str(result))
-        return result
+            self.cache_last_action = [chars[-1], str(numbers[-1])]
+            self.result = self.result.__round__(2)
+            self.result = self.__remove_zeros_in_result_string(str(self.result))
+            return self.result
+        else:
+            self.result = self.result + self.cache_last_action[0] + self.cache_last_action[1]
+            numbers = self.numbers_in_string(self.result)
+
+            self.result, temp = self.__calc_para(char=self.cache_last_action[0], temp=0, numbers=numbers)
+            self.result = self.result.__round__(2)
+            self.result = self.__remove_zeros_in_result_string(str(self.result))
+            return self.result
     def __remove_zeros_in_result_string(self, string: str) -> str:
         splitted_string = string.split('.')
         for item in splitted_string[1]:
