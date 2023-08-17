@@ -39,7 +39,8 @@ class Calc():
         self.__create_button(',', self.__button_point, 0.5, 0.7)
         #string output information
         self.__create_textbox()
-        self._output_string = ''
+        self._output_string = '0'
+        self.__write_output('')
 
         #if people enter number
         self._app.bind('<Key>', self.__inputChar)
@@ -48,24 +49,34 @@ class Calc():
 
     #function button-click reaction
     def __button_1(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('1')
     def __button_2(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('2')
     def __button_3(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('3')
     def __button_4(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('4')
     def __button_5(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('5')
     def __button_6(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('6')
     def __button_7(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('7')
     def __button_8(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('8')
     def __button_9(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('9')
     def __button_0(self):
+        self.__replace_first_zero_on_button()
         self.__write_output('0')
     def __button_plus(self):
         try:
@@ -92,12 +103,14 @@ class Calc():
         except:
             pass
     def __button_backspace(self):
-        self.cache_last_action = None
-        self._output_string = self._output_string[:-1]
+        if self.cache_last_action is None and len(self._output_string) == 1:
+            self._output_string = '0'
+        elif self.cache_last_action is None:
+            self._output_string = self._output_string[:-1]
         self.__write_output('')
     def __button_clear(self):
         self.cache_last_action = None
-        self._output_string = ''
+        self._output_string = '0'
         self.__write_output('')
     def __button_point(self):
         try:
@@ -222,7 +235,7 @@ class Calc():
                 temp += 1
             return result, temp
     def calculation(self, string):
-        if self.cache_last_action is None:
+        if self.cache_last_action is None or self._output_string != self.result:
             chars = self.operations_in_string(string)
             numbers = self.numbers_in_string(string)
 
@@ -249,6 +262,9 @@ class Calc():
             if item != '0':
                 return string
         return splitted_string[0]
+    def __replace_first_zero_on_button(self) -> str:
+        if self._output_string == '0':
+            self._output_string = ''
 
 def main():
     app = Calc()
